@@ -1,161 +1,173 @@
-# 🛒 Smart Product Recommendation System (Machine Learning Project)
+# 🛒 Smart Product Recommendation System
 
-## 📌 1. Giới thiệu
+### 📚 Machine Learning Mini Project
 
-Trong các hệ thống thương mại điện tử hiện đại, **Recommendation System (Hệ gợi ý)** đóng vai trò quan trọng trong việc:
+---
+
+## 📌 1. Introduction
+
+Trong các hệ thống thương mại điện tử hiện đại như Amazon, Shopee, việc **gợi ý sản phẩm (Recommendation System)** đóng vai trò quan trọng trong việc:
 
 * Cá nhân hóa trải nghiệm người dùng
-* Tăng tỷ lệ chuyển đổi (conversion rate)
-* Tối ưu doanh thu
+* Tăng doanh thu
+* Tối ưu hành vi mua sắm
 
-Đề tài này xây dựng một **hệ thống gợi ý sản phẩm** sử dụng **Machine Learning (Linear Regression)** kết hợp với giao diện GUI bằng PyQt5 để mô phỏng hệ thống thực tế.
-
----
-
-## 🎯 2. Mục tiêu
-
-* Xây dựng mô hình dự đoán khả năng người dùng mua sản phẩm
-* Thiết kế hệ thống gợi ý sản phẩm dựa trên điểm dự đoán
-* Trực quan hóa kết quả bằng GUI
-* Áp dụng kiến thức Machine Learning vào bài toán thực tế
+Dự án này xây dựng một **hệ thống gợi ý sản phẩm thông minh** sử dụng **Machine Learning (Linear Regression)** kết hợp với giao diện GUI bằng PyQt5.
 
 ---
 
-## 📊 3. Dataset
+## 🎯 2. Objectives
 
-Dataset gồm các thuộc tính:
-
-* `product_name`: Tên sản phẩm
-* `category`: Danh mục
-* `rating`: Đánh giá (1 → 5)
-* `price`: Giá sản phẩm
-* `popularity`: Độ phổ biến
-* `views`: Lượt xem
-* `purchased`: Đã mua (0 hoặc 1)
-* `score`: Điểm tổng hợp (target phụ)
-
-Số lượng dữ liệu: ~5000 sản phẩm
+* Xây dựng mô hình dự đoán khả năng mua sản phẩm
+* Áp dụng Linear Regression vào bài toán thực tế
+* Thiết kế GUI trực quan giống hệ thống e-commerce
+* Trực quan hóa dữ liệu và kết quả
 
 ---
 
-## 🤖 4. Mô hình Machine Learning
+## 🧠 3. Machine Learning Model
 
-### 4.1. Linear Regression
+### 3.1 Linear Regression
 
-Mô hình sử dụng **Hồi quy tuyến tính** để dự đoán:
+Mô hình dự đoán điểm sản phẩm:
 
-> Khả năng người dùng sẽ mua sản phẩm
-
-Công thức tổng quát:
-
+$$
 \hat{y} = w_1 x_1 + w_2 x_2 + w_3 x_3 + w_4 x_4 + b
+$$
 
 Trong đó:
 
-* (x_1): rating
-* (x_2): price
-* (x_3): popularity
-* (x_4): views
-* (w_i): trọng số
-* (b): bias
-* (\hat{y}): giá trị dự đoán (score)
+* $x_1$: rating
+* $x_2$: price
+* $x_3$: popularity
+* $x_4$: views
+* $w_i$: trọng số
+* $b$: bias
+* $\hat{y}$: score dự đoán
 
 ---
 
-### 4.2. Hàm mất mát (Loss Function)
+### 3.2 Vector Form
 
-Sử dụng **Mean Squared Error (MSE)**:
+$$
+\hat{y} = \mathbf{w}^T \mathbf{x} + b
+$$
 
+---
+
+### 3.3 Loss Function (MSE)
+
+$$
 MSE = \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2
+$$
 
 ---
 
-### 4.3. Root Mean Squared Error (RMSE)
+### 3.4 Evaluation Metric (RMSE)
 
-Đánh giá mô hình:
-
+$$
 RMSE = \sqrt{\frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2}
-
-Trong project:
-
-```
-RMSE ≈ 0.48
-```
-
-→ Sai số thấp, mô hình hoạt động ổn định.
+$$
 
 ---
 
-### 4.4. Chuẩn hóa dữ liệu
+### 3.5 Feature Scaling (Min-Max)
 
-Sử dụng **Min-Max Scaling**:
-
+$$
 x' = \frac{x - x_{min}}{x_{max} - x_{min}}
-
-Giúp:
-
-* Đưa dữ liệu về [0,1]
-* Tránh bias do scale
-* Tăng tốc độ hội tụ
-
----
-
-## 🧠 5. Cách hệ thống hoạt động
-
-### Bước 1: Nhập dữ liệu người dùng
-
-* Category
-* Price
-* Top-K
-* Search
-
----
-
-### Bước 2: Tiền xử lý
-
-* Lọc theo category
-* Lọc theo giá
-* Chuẩn hóa dữ liệu
-
----
-
-### Bước 3: Dự đoán
-
-Model tính:
-
-$$
-Score = f(rating, price, popularity, views)
 $$
 
 ---
 
-### Bước 4: Recommendation
+## 🤖 4. Recommendation Strategy
 
-* Sắp xếp theo score giảm dần
-* Lấy Top-K sản phẩm
+### 4.1 Score Function
 
----
-
-## 🎨 6. Giao diện người dùng (GUI)
-
-Hệ thống được xây dựng bằng **PyQt5**, bao gồm:
-
-### 🔹 Product Card
-
-* Ảnh sản phẩm
-* Tên
-* Rating ⭐
-* Giá
-* Score
+$$
+Score(u, i) = w_1 \cdot rating_i + w_2 \cdot price_i + w_3 \cdot popularity_i + w_4 \cdot views_i + b
+$$
 
 ---
 
-### 🔹 Tính năng chính
+### 4.2 Top-K Recommendation
 
-* 🔎 Search sản phẩm
-* 🎯 Filter category
-* 💰 Filter price
-* 📊 Hiển thị score ML
+$$
+Recommend(u) = \operatorname{TopK}(Score(u, i))
+$$
+
+---
+
+### 4.3 Hybrid (Advanced)
+
+$$
+Score = \alpha \cdot ContentScore + (1 - \alpha) \cdot MLScore
+$$
+
+---
+
+## 📊 5. Dataset
+
+Dataset gồm:
+
+* product_name
+* category
+* rating
+* price
+* popularity
+* views
+* purchased
+* score
+
+📦 Size: ~5000 products
+
+---
+
+## ⚙️ 6. System Architecture
+
+### 🔁 Flowchart
+
+```
+User Input
+   │
+   ▼
+Filter (Category / Price / Search)
+   │
+   ▼
+Feature Processing
+   │
+   ▼
+Linear Regression Model
+   │
+   ▼
+Score Prediction
+   │
+   ▼
+Sort (Descending)
+   │
+   ▼
+Top-K Products
+   │
+   ▼
+Display GUI (Product Cards)
+```
+
+---
+
+## 🖥 7. GUI Features
+
+### 🎨 Interface
+
+* Product cards (image, name, rating ⭐, price, score)
+* Grid layout giống website thương mại điện tử
+
+---
+
+### 🔎 User Functions
+
+* Search sản phẩm
+* Filter category
+* Filter price
+* Top-K recommendation
 
 ---
 
@@ -167,68 +179,101 @@ Hệ thống được xây dựng bằng **PyQt5**, bao gồm:
 
 ---
 
-### 🌙 Dark Mode
+### 🌙 UI Enhancement
 
-* Chuyển đổi giao diện sáng/tối
+* Dark mode
+* Hover animation
 
 ---
 
-## 📊 7. Visualization
+## 📈 8. Visualization
 
 Hệ thống hỗ trợ:
 
-### 📈 Category Distribution
-
-* Số lượng sản phẩm theo danh mục
-
-### 📉 Price Distribution
-
-* Histogram giá
-
-### 📊 Model Evaluation
-
-* RMSE
+* 📊 Category Distribution
+* 📉 Price Distribution
+* 📈 RMSE Evaluation
 
 ---
 
-## 🔥 8. Kết quả đạt được
+## 🚀 9. Installation
 
-* Xây dựng thành công hệ thống gợi ý sản phẩm
-* Áp dụng Linear Regression vào bài toán thực tế
+### 1. Clone project
+
+```bash
+git clone <your-repo>
+cd Mini_Project1/src
+```
+
+---
+
+### 2. Install dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+### 3. Run
+
+```bash
+python main.py
+```
+
+---
+
+## 🧪 10. Results
+
+* RMSE ≈ 0.48
+* Gợi ý sản phẩm hợp lý
 * GUI trực quan, dễ sử dụng
-* Có thể mở rộng thành hệ thống lớn
 
 ---
 
-## 🚀 9. Hướng phát triển
+## 🔥 11. Demo Features
+
+* 🔎 Search
+* 🔥 Trending Products
+* 🧺 Shopping Cart
+* 🌙 Dark Mode
+* 📊 Charts
+
+---
+
+## 🚧 12. Future Work
 
 * Content-based filtering
 * Collaborative filtering
-* Deep Learning (Neural Network)
-* Hybrid Recommendation
+* Deep Learning (Neural Networks)
 * Web deployment (Flask / Streamlit)
 
 ---
 
-## 🧾 10. Kết luận
+## 🧾 13. Conclusion
 
-Đề tài đã chứng minh rằng:
+Dự án đã chứng minh:
 
-> Machine Learning có thể ứng dụng hiệu quả trong hệ thống gợi ý sản phẩm.
+> Machine Learning có thể áp dụng hiệu quả trong hệ thống gợi ý sản phẩm.
 
-Hệ thống không chỉ giúp:
-
-* Cá nhân hóa trải nghiệm
-* Tăng hiệu quả kinh doanh
-
-mà còn là nền tảng để phát triển các hệ thống recommendation phức tạp hơn.
+Hệ thống có thể mở rộng để trở thành một nền tảng recommendation thực tế.
 
 ---
 
-## 👨‍💻 11. Thông tin
+## 👨‍💻 Author
 
-* Môn học: Machine Learning
-* Đề tài: Product Recommendation System
-* Công nghệ: Python, PyQt5, Scikit-learn
+* Student: *Your Name*
+* Course: Machine Learning
+* Topic: Product Recommendation System
+
+---
+
+## ⭐ Final Note
+
+Project này phù hợp cho:
+
+* Demo môn Machine Learning
+* Portfolio cá nhân
+* Nền tảng phát triển hệ thống lớn hơn
 
 ---
